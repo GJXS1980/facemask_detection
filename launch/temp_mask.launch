@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<launch>
+
+  <node pkg="facemask_detection" name="facemask_detection_faster" type="facemask_detection_faster.py" output="screen" />   
+
+  <node pkg="facemask_detection" name="voice_warning" type="voice_warning.py" output="screen">   
+    <param name="failed_file_path" value="$(find facemask_detection)/params/voice/warning.mp3" />
+  </node>
+
+  <!-- 启动体温检测节点  -->
+  <node pkg="facemask_detection" name="Thermometry" type="TempMea" output="screen" >   
+    <param name="usb_port" value="/dev/mls90614" />   
+  </node>
+
+</launch>
