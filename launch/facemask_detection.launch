@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<launch>
+
+  <!-- 启动相机节点  -->
+  <include file="$(find usb_cam)/launch/usb_cam-test.launch"/>
+
+  <node pkg="facemask_detection" name="facemask_detection_ros" type="facemask_detection_ros.py" output="screen">   
+    <!--remap from="input_rgb_image" to="/camera/rgb/image_raw" /-->  
+    <remap from="input_rgb_image" to="/usb_cam/image_raw" />  
+    <param name="failed_file_path" value="$(find facemask_detection)/params/voice/warning.mp3" />
+    <param name="file_path_a" value="$(find facemask_detection)/params/voice/normal.mp3" />
+    <param name="file_path_b" value="$(find facemask_detection)/params/voice/abnormal.mp3" />
+  </node>
+
+  <!-- 启动订阅cv_bridge_image话题  -->
+  <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view" args="/cv_bridge_image"/>
+
+</launch>

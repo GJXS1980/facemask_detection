@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<launch>
+  <!-- 启动相机节点  -->
+  <node pkg="facemask_detection" name="facemask_detection_faster" type="facemask_detection_faster.py" output="screen" >   
+    <param name="opencv_cam" value="0"/> 
+  </node>
+
+  <node pkg="facemask_detection" name="Temperature_measurement_node" type="Temperature_measurement_node" output="screen" >   
+    <param name="usb_port" value="/dev/hg_infrared" />
+  </node>
+
+
+
+  <node pkg="facemask_detection" name="voice_warning" type="voice_warning.py" output="screen">   
+    <!-- 没有佩戴口罩 -->
+    <param name="failed_file_path" value="$(find facemask_detection)/params/voice/NoMask.wav" />
+    <!-- 体温正常 -->
+    <param name="file_path_a" value="$(find facemask_detection)/params/voice/nor_temp.wav" />
+    <!-- 体温过高 -->
+    <param name="file_path_b" value="$(find facemask_detection)/params/voice/abnor_temp.wav" />
+    <!-- 佩戴口罩 -->
+    <param name="file_path_c" value="$(find facemask_detection)/params/voice/Mask.wav" />
+  </node>
+
+</launch>
